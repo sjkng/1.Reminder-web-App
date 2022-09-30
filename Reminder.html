@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <script> 
+      alert("Greetings!");
+    </script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Reminder APP</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+  </head>
+  <body>
+    <div class="container">
+      <div class="card ">
+        <div id="taskList"> 
+        </div>
+        <br>
+        <div class="container">
+          <div class="card">
+            <div class="card-body">
+              <form>
+                <div class="form-group">
+                  <small id = "Help" class = "form-text text-muted"> Add a short description of your task</small>
+                  <input type="text" class="form-control" id="taskID">
+                </div>
+                <div class="form-group form-check">
+                  <input type="checkbox" class = "form-check-input" id="urgentCheck">
+                  <label class="form-check-label">Urgent?</label>
+                </div>
+                <button type="submit" class="btn btn-success" onclick = "return AddTask();">ADD Task</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+     <script async src="https://cdn.jsdelivr.net/npm/es-module-shims@1/dist/es-module-shims.min.js" crossorigin="anonymous"></script>
+    <script type="importmap">
+    {
+      "imports": {
+        "@popperjs/core": "https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js",
+        "bootstrap": "https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.esm.min.js"
+      }
+    }
+    </script>
+    <script type="module">
+      import * as bootstrap from 'bootstrap'
+      new bootstrap.Popover(document.getElementById('popoverButton'))
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js" integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz" crossorigin="anonymous"></script>
+
+    <script >
+      var taskNr = 1;
+      function AddTask(){
+        var task = $("#taskID").val();
+        var isUrgent = $(`#urgentCheck`).is(`:checked`);
+        var modifyImg;
+        var divClass = "card-header text-center alert";
+
+        if (isUrgent) {
+          divClass += " alert-danger";
+          modifyImg = "icons8-high-priority-40.png";
+        } else {
+          modifyImg = "icons8-event-accepted-tentatively-33.png";
+          divClass += " alert-info";
+        }
+
+        $("#taskList").append(`
+          <div class="container" id = "`+taskNr+`"">
+          <br>
+            <div class="card">
+              <div class="` + divClass + `">
+                <img src="` + modifyImg + `">
+              </div>
+              <div class="container text-center">
+                <h5>` + task + `</h5>
+                <img type="button" src="icons8-remove-20.png" class="rounded text-center" onclick = "return RemoveTask(`+taskNr+`);">
+              </div>
+              
+            </div>
+          </div>
+        `);
+        ++taskNr;
+        return false;
+      }
+
+    function RemoveTask(taskNr) {
+      $("#" + taskNr).remove();
+      return false;
+    }
+
+    </script>
+
+  </body>
+
+</html>
